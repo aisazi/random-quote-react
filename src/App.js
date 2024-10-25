@@ -1,25 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{Component} from 'react';
+import Random from './random';
+import { quotes } from './data'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      array: quotes,
+      index: 0
+    }
+    this.nextText = this.nextText.bind(this)
+    this.prevText = this.prevText.bind(this)
+  }
+  nextText() {
+    const { array, index } = this.state
+    if (index < array.length) {
+      this.setState({ index: index + 1 })
+    }
+  }
+  prevText() {
+    const { index } = this.state
+    if (index > 0) {
+      this.setState({ index: index - 1 })
+    }
+  }
+  
+  render() {
+    const { index, array } = this.state
+    return (
+      <div>
+        <Random 
+          nextText={this.nextText} 
+          prevText={this.prevText} 
+          obj={array[index]} 
+        />
+      </div>
+    )
+  }
 }
 
 export default App;
+
